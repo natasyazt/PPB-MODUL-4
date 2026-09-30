@@ -1,18 +1,31 @@
 import { useRef } from 'react'
 
-function GunCard({ gun }) {
+function GunCard({ gun, onAddToCart }) {
   const popup = useRef(null)
 
   return (
     <li className="card">
-      <button className="card-btn" onClick={() => popup.current.showModal()}>
-        <img className="card-img" src={gun.image} alt="" width="120" height="90" />
-        <span className="name display">{gun.name}</span>
-        <span className="type">
-          {gun.type} · {gun.caliber}
-        </span>
-        <span className="price">${gun.price.toLocaleString()}</span>
-      </button>
+      <div className="card-inner">
+        <button className="card-btn" onClick={() => popup.current.showModal()}>
+          {/* Gambar dengan ukuran seragam (object-fit: contain) */}
+          <div className="card-img-wrap">
+            <img className="card-img" src={gun.image} alt="" />
+          </div>
+          <span className="name display">{gun.name}</span>
+          <span className="type">
+            {gun.type} · {gun.caliber}
+          </span>
+          <span className="price">${gun.price.toLocaleString()}</span>
+        </button>
+
+        <button
+          className="add-to-cart-btn"
+          type="button"
+          onClick={() => onAddToCart(gun)}
+        >
+          + Tambah ke Keranjang
+        </button>
+      </div>
 
       <dialog
         className="popup"
@@ -25,9 +38,18 @@ function GunCard({ gun }) {
           {gun.type} · {gun.caliber} · <span className="price">${gun.price.toLocaleString()}</span>
         </p>
         <p>{gun.description}</p>
-        <form method="dialog">
-          <button className="popup-close">Close</button>
-        </form>
+        <div className="popup-actions">
+          <button
+            className="add-to-cart-btn popup-add"
+            type="button"
+            onClick={() => { onAddToCart(gun); popup.current.close() }}
+          >
+            + Tambah ke Keranjang
+          </button>
+          <form method="dialog">
+            <button className="popup-close">Close</button>
+          </form>
+        </div>
       </dialog>
     </li>
   )

@@ -1,6 +1,6 @@
 const NAV = ['Catalog', 'About', 'Contact']
 
-function Header({ tab, onTab }) {
+function Header({ tab, onTab, cartCount, onCartOpen }) {
   return (
     <header className="header">
       <span className="brand display">Bore &amp; Barrel</span>
@@ -16,6 +16,17 @@ function Header({ tab, onTab }) {
           </button>
         ))}
       </nav>
+      <button
+        type="button"
+        className="cart-btn"
+        onClick={onCartOpen}
+        aria-label="Buka keranjang belanja"
+      >
+        🛒
+        {cartCount > 0 && (
+          <span className="cart-badge">{cartCount}</span>
+        )}
+      </button>
     </header>
   )
 }
